@@ -5,10 +5,12 @@ on:
     branches:
       - master
       - 'polkadot-v**'
+      - 'release-crates-io-v**'
   pull_request:
     branches:
       - master
       - 'polkadot-v**'
+      - 'release-crates-io-v**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
