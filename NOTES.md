@@ -86,14 +86,26 @@ Updating Cargo.toml file...
 ...updating done!
 ```
 
-Just only one exception in this process:: the package `substrate-test-runtime-client` that's not published, 
-in this case we can refer to the polkadot brach one.
+I've also updated the `rust-toolchain.toml` file to use stable version.
+
+## ATTENTION
+
+In order to make just `cargo` happy on read all metadata information I've also changed the
+dependency from `substrate-test-runtime-client` that's a not published crate. In this case 
+I've referred (wrongly) to the polkadot branch one.
 
 ```toml
 substrate-test-runtime-client = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-crates-io-v1.10.0" }
 ```
 
-I've also updated the `rust-toolchain.toml` file to use stable version.
+Why this is wrong: because the `substrate-test-runtime-client` use lot of substrate dependency
+with the correct version but with also the `path` directive, so it uses the crates from the
+git sources and, even if the crates have the same version, the compiler considers all the
+types from these crates not the same that the _code under test_ uses.
+
+Ideal could be to create our own repo with a fork of all substrate and polkadot test
+package to maintain the crates-io branch: with this new repo we can also move the
+tests pakages from zkVerify.
 
 ## Test implementation
 
