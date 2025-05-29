@@ -717,6 +717,7 @@ where
 				config,
 			)?;
 		}
+		let measured_proof_size_before = get_proof_size().unwrap_or_default();
 		let precompiles = T::PrecompilesValue::get();
 		Self::execute(
 			source,
@@ -729,6 +730,7 @@ where
 			is_transactional,
 			weight_limit,
 			proof_size_base_cost,
+			measured_proof_size_before,
 			|executor| {
 				T::OnCreate::on_create(source, contract_address);
 				let (reason, _) = executor.transact_create_force_address(
